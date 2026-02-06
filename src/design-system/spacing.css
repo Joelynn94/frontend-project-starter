@@ -153,6 +153,7 @@
 .my-auto { margin-top: auto; margin-bottom: auto; }
 
 /* Padding utilities */
+/* Note: padding does not support 'auto' values in CSS, so p-auto variants are intentionally excluded */
 /* p - all sides */
 .p-0 { padding: 0; }
 .p-1 { padding: 0.25rem; }
@@ -294,6 +295,7 @@
 .py-64 { padding-top: 16rem; padding-bottom: 16rem; }
 
 /* Gap utilities for flexbox/grid */
+/* Note: gap does not support 'auto' values in CSS, so gap-auto variants are intentionally excluded */
 /* gap - all directions */
 .gap-0 { gap: 0; }
 .gap-1 { gap: 0.25rem; }
