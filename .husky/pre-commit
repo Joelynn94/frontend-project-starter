@@ -1,0 +1,14 @@
+# Run pre-commit checks
+echo "🔍 Running format check..."
+npm run format:check
+
+echo "\n🔍 Running linter..."
+npm run lint
+
+echo "\n🔍 Running type check..."
+npm run typecheck
+
+echo "\n🧪 Running tests..."
+npm run test -- --run
+
+echo "\n✅ All pre-commit checks passed!"
