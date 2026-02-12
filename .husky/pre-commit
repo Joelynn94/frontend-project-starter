@@ -1,9 +1,9 @@
-# Run pre-commit checks
-echo "🔍 Running format check..."
-npm run format:check
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
 
-echo "\n🔍 Running linter..."
-npm run lint
+# Run lint-staged on changed files only
+echo "🔍 Running lint-staged..."
+npx lint-staged
 
 echo "\n🔍 Running type check..."
 npm run typecheck
