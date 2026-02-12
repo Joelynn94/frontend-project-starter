@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "EditorConfig.EditorConfig",
+    "ZixuanChen.vitest-explorer",
+    "bradlc.vscode-tailwindcss"
+  ]
+}

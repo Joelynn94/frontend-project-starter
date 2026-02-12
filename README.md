@@ -11,11 +11,18 @@ A modern React + TypeScript starter template with all the essential tools config
 - 💅 **Prettier** - Automatic code formatting
 - 🧪 **Vitest** - Fast unit testing with React Testing Library
 - 🏗️ **Plop** - Component generation templates
+- � **Husky + lint-staged** - Pre-commit hooks for code quality
+- 📝 **EditorConfig** - Consistent coding styles across editors
+- 🎯 **TypeScript** - Strict type checking
+- 🤖 **Dependabot** - Automated dependency updates
 - 🚀 **GitHub Actions** - CI/CD pipeline with automatic deployment to GitHub Pages
+- 📋 **Issue/PR Templates** - Standardized contribution workflow
+- 🎨 **VS Code** - Workspace settings and extension recommendations
 
 ## 📋 Prerequisites
 
-- Node.js 18+ and npm
+- Node.js 20+ (use `nvm use` to automatically use the version specified in `.nvmrc`)
+- npm
 
 ## 🛠️ Getting Started
 
@@ -24,6 +31,7 @@ A modern React + TypeScript starter template with all the essential tools config
 ```bash
 git clone https://github.com/Joelynn94/frontend-project-starter.git
 cd frontend-project-starter
+nvm use  # Use the correct Node version from .nvmrc
 npm install
 ```
 
@@ -48,19 +56,22 @@ npm run preview
 
 ## 📜 Available Scripts
 
-| Script | Description |
-|--------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Build for production |
-| `npm run preview` | Preview production build |
-| `npm run lint` | Run ESLint |
-| `npm run lint:fix` | Fix ESLint errors automatically |
-| `npm run format` | Format code with Prettier |
-| `npm run format:check` | Check code formatting |
-| `npm run test` | Run tests in watch mode |
-| `npm run test:ui` | Run tests with UI |
-| `npm run test:coverage` | Run tests with coverage report |
-| `npm run generate` | Generate new component with Plop |
+| Script                  | Description                            |
+| ----------------------- | -------------------------------------- |
+| `npm run dev`           | Start development server               |
+| `npm run build`         | Build for production                   |
+| `npm run preview`       | Preview production build               |
+| `npm run lint`          | Run ESLint                             |
+| `npm run lint:fix`      | Fix ESLint errors automatically        |
+| `npm run format`        | Format code with Prettier              |
+| `npm run format:check`  | Check code formatting                  |
+| `npm run typecheck`     | Run TypeScript type checking           |
+| `npm run test`          | Run tests in watch mode                |
+| `npm run test:ui`       | Run tests with UI                      |
+| `npm run test:coverage` | Run tests with coverage report         |
+| `npm run test:ci`       | Run tests once with coverage (for CI)  |
+| `npm run generate`      | Generate new component with Plop       |
+| `npm run clean`         | Clean build artifacts and node_modules |
 
 ## 🧩 Component Generation with Plop
 
@@ -71,12 +82,14 @@ npm run generate
 ```
 
 Follow the prompts to create a new component with:
+
 - Component file (`.tsx`)
 - CSS Module file (`.module.css`) - optional
 - Test file (`.test.tsx`) - optional
 - Index file for clean exports
 
 Example generated component structure:
+
 ```
 src/components/MyComponent/
   ├── MyComponent.tsx
@@ -144,10 +157,12 @@ npm run test:ui
 ## 🚀 Deployment to GitHub Pages
 
 This template includes a GitHub Actions workflow that automatically:
+
 1. Runs linting and formatting checks
-2. Runs all tests
-3. Builds the project
-4. Deploys to GitHub Pages (on push to main/master)
+2. Runs TypeScript type checking
+3. Runs all tests with coverage
+4. Builds the project
+5. Deploys to GitHub Pages (on push to main/master)
 
 ### Setup GitHub Pages
 
@@ -162,8 +177,14 @@ Your site will be available at: `https://<username>.github.io/<repository>/`
 
 ```
 ├── .github/
-│   └── workflows/
-│       └── ci-cd.yml          # CI/CD pipeline
+│   ├── workflows/
+│   │   └── ci-cd.yml          # CI/CD pipeline
+│   ├── ISSUE_TEMPLATE/        # Issue templates
+│   ├── pull_request_template.md
+│   └── dependabot.yml         # Dependency updates config
+├── .vscode/
+│   ├── extensions.json        # Recommended extensions
+│   └── settings.json          # Workspace settings
 ├── plop-templates/            # Component generation templates
 │   ├── Component.tsx.hbs
 │   ├── Component.module.css.hbs
@@ -179,9 +200,20 @@ Your site will be available at: `https://<username>.github.io/<repository>/`
 │   ├── App.module.css       # App styles
 │   ├── main.tsx             # Entry point
 │   └── vite-env.d.ts        # TypeScript declarations
+├── .editorconfig            # Editor configuration
+├── .env.example             # Environment variables template
+├── .gitignore
+├── .husky/                  # Git hooks
+│   └── pre-commit          # Pre-commit checks
+├── .nvmrc                   # Node version
 ├── .prettierrc              # Prettier config
+├── .prettierignore
+├── CHANGELOG.md             # Version history
+├── CONTRIBUTING.md          # Contribution guidelines
 ├── eslint.config.js         # ESLint config
+├── LICENSE                  # MIT License
 ├── plopfile.js              # Plop config
+├── README.md
 ├── tsconfig.json            # TypeScript config
 ├── vite.config.ts           # Vite config
 ├── vitest.config.ts         # Vitest config
@@ -193,6 +225,7 @@ Your site will be available at: `https://<username>.github.io/<repository>/`
 ### Vite Configuration
 
 The `vite.config.ts` includes:
+
 - CSS Modules support
 - Path aliases (`@/` for `src/`)
 - GitHub Pages base path
@@ -200,6 +233,7 @@ The `vite.config.ts` includes:
 ### TypeScript Configuration
 
 Strict mode enabled with:
+
 - `strict: true`
 - Path aliases
 - React JSX support
@@ -207,17 +241,34 @@ Strict mode enabled with:
 ### ESLint + Prettier
 
 ESLint and Prettier work together:
+
 - ESLint handles code quality
 - Prettier handles formatting
 - No conflicts between the two
 
+### Pre-commit Hooks
+
+Husky + lint-staged ensure code quality before commits:
+
+- **lint-staged**: Runs ESLint and Prettier only on staged files
+- **Type checking**: Validates TypeScript types
+- **Tests**: Runs test suite to catch breaking changes
+
+### VS Code Integration
+
+Recommended workspace settings and extensions are configured in `.vscode/`:
+
+- Auto-format on save
+- ESLint auto-fix on save
+- Recommended extensions prompt on first open
+
 ## 🤝 Contributing
 
-This is a template project. Feel free to fork and customize it for your needs!
+Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
 
 ## 📄 License
 
-MIT - feel free to use this template for any project.
+MIT License - see [LICENSE](LICENSE) for details.
 
 ## 🎯 Next Steps
 
@@ -225,10 +276,25 @@ After cloning this template:
 
 1. Update `package.json` with your project details
 2. Update `vite.config.ts` base path for GitHub Pages
-3. Customize the example components
-4. Add your own components using `npm run generate`
-5. Write tests for your components
-6. Push to GitHub and enjoy automatic deployments!
+3. Copy `.env.example` to `.env.local` and configure environment variables
+4. Review and customize `.vscode/settings.json` for your preferences
+5. Update `LICENSE` with your name/organization
+6. Customize the example components or remove them
+7. Add your own components using `npm run generate`
+8. Write tests for your components
+9. Update `CHANGELOG.md` as you make changes
+10. Push to GitHub and enjoy automatic deployments!
+
+## 🔄 Keeping Dependencies Updated
+
+This template uses Dependabot to automatically:
+
+- Check for dependency updates weekly
+- Create PRs for security updates
+- Group minor and patch updates
+- Update GitHub Actions
+
+Review and merge Dependabot PRs regularly to keep your project secure and up-to-date.
 
 ---
 
