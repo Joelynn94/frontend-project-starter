@@ -4,9 +4,11 @@ import viteLogo from '/vite.svg';
 import styles from './App.module.css';
 import { Button } from './components/Button';
 import { cn } from './design-system';
+import { isFeatureEnabled } from './utils/env';
 
 function App() {
   const [count, setCount] = useState(0);
+  const isNewHeaderEnabled = isFeatureEnabled('NEW_HEADER');
 
   return (
     <div className={styles.app}>
@@ -18,6 +20,9 @@ function App() {
           <img src={reactLogo} className={`${styles.logo} ${styles.react}`} alt="React logo" />
         </a>
       </div>
+      {isNewHeaderEnabled && (
+        <p className={styles.featureBanner}>Feature flag enabled: NEW_HEADER</p>
+      )}
       <h1 className={styles.title}>Vite + React + TypeScript</h1>
       <div className={styles.card}>
         <Button onClick={() => setCount(count => count + 1)}>count is {count}</Button>

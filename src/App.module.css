@@ -45,6 +45,18 @@
   margin-bottom: 2rem;
 }
 
+.featureBanner {
+  margin: 0 auto 1rem;
+  max-width: 560px;
+  padding: 0.5rem 1rem;
+  border: 1px solid #2ea043;
+  border-radius: 999px;
+  background: rgba(46, 160, 67, 0.15);
+  color: #2ea043;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
 .card {
   padding: 2em;
 }

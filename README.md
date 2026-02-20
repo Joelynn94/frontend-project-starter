@@ -10,8 +10,9 @@ A modern React + TypeScript starter template with all the essential tools config
 - 📏 **ESLint** - Code quality and consistency
 - 💅 **Prettier** - Automatic code formatting
 - 🧪 **Vitest** - Fast unit testing with React Testing Library
+- 🌐 **MSW** - API mocking for testing
 - 🏗️ **Plop** - Component generation templates
-- � **Husky + lint-staged** - Pre-commit hooks for code quality
+- 🔒 **Husky + lint-staged** - Pre-commit hooks for code quality
 - 📝 **EditorConfig** - Consistent coding styles across editors
 - 🎯 **TypeScript** - Strict type checking
 - 🤖 **Dependabot** - Automated dependency updates
@@ -154,6 +155,74 @@ npm run test:coverage
 npm run test:ui
 ```
 
+### API Testing with MSW
+
+This template includes [Mock Service Worker (MSW)](https://mswjs.io/) for mocking API requests in tests. MSW intercepts network requests at the service worker level, allowing you to test components that make API calls without hitting real endpoints.
+
+#### Example API Test
+
+```tsx
+import { describe, it, expect } from 'vitest';
+import { render, screen, waitFor } from '@testing-library/react';
+import { UserList } from './UserList';
+
+describe('UserList', () => {
+  it('renders users after successful fetch', async () => {
+    render(<UserList />);
+
+    // Wait for loading to finish
+    await waitFor(() => {
+      expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
+    });
+
+    // Check that mocked users are rendered
+    expect(screen.getByText('John Doe')).toBeInTheDocument();
+  });
+});
+```
+
+#### Mocking API Handlers
+
+MSW handlers are defined in `src/test/mocks/handlers.ts`:
+
+```tsx
+import { http, HttpResponse } from 'msw';
+
+export const handlers = [
+  http.get('https://api.example.com/users', () => {
+    return HttpResponse.json([{ id: 1, name: 'John Doe', email: 'john@example.com' }]);
+  }),
+];
+```
+
+#### Overriding Handlers in Tests
+
+You can override handlers for specific test cases:
+
+```tsx
+it('displays error when fetch fails', async () => {
+  const { server } = await import('../test/mocks/server');
+  const { http, HttpResponse } = await import('msw');
+
+  server.use(
+    http.get('https://api.example.com/users', () => {
+      return new HttpResponse(null, { status: 500 });
+    })
+  );
+
+  render(<UserList />);
+  // Test error handling...
+});
+```
+
+#### Example Files
+
+- **API utilities**: [`src/utils/api.ts`](src/utils/api.ts)
+- **MSW handlers**: [`src/test/mocks/handlers.ts`](src/test/mocks/handlers.ts)
+- **Component example**: [`src/components/UserList/UserList.tsx`](src/components/UserList/UserList.tsx)
+- **Component test**: [`src/components/UserList/UserList.test.tsx`](src/components/UserList/UserList.test.tsx)
+- **API test**: [`src/utils/api.test.ts`](src/utils/api.test.ts)
+
 ## 🚀 Deployment to GitHub Pages
 
 This template includes a GitHub Actions workflow that automatically:
@@ -193,9 +262,15 @@ Your site will be available at: `https://<username>.github.io/<repository>/`
 ├── public/                    # Static assets
 ├── src/
 │   ├── components/           # React components
-│   │   └── Button/          # Example component
+│   │   ├── Button/          # Example component
+│   │   └── UserList/        # Example component with API
 │   ├── test/                # Test setup
-│   │   └── setup.ts
+│   │   ├── mocks/          # MSW API mocks
+│   │   │   ├── handlers.ts # API mock handlers
+│   │   │   └── server.ts   # MSW server setup
+│   │   └── setup.ts        # Test configuration
+│   ├── utils/              # Utility functions
+│   │   └── api.ts          # API utilities
 │   ├── App.tsx              # Main app component
 │   ├── App.module.css       # App styles
 │   ├── main.tsx             # Entry point
